@@ -299,6 +299,17 @@ fs.ensureDirSync('./_dist/types/fvtt-shim');
 fs.emptyDirSync('./_dist/types/fvtt-shim');
 fs.copySync('./node_modules/@typhonjs-fvtt/types-fvtt-shim/dist', './_dist/types/fvtt-shim')
 
+const typeFiles = await getFileList({ dir: './_dist/types/fvtt-shim', resolve: true, walk: true });
+for (const typeFile of typeFiles)
+{
+   let fileData = fs.readFileSync(typeFile, 'utf-8').toString();
+
+   // Ignore any `{@link #runtime...}` enclosed references.
+   fileData = fileData.replaceAll(/(?<!\{@link\s*)#runtime\//g, '@typhonjs-fvtt/runtime/');
+
+   fs.writeFileSync(typeFile, fileData.replaceAll('@typhonjs-svelte/runtime-base/', '@typhonjs-fvtt/runtime/'));
+}
+
 // -------------------------------------------------------------------------------------------------------------------
 
 // We use rollup as per normal to generate the library bundles.
