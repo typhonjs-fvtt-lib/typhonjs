@@ -16,9 +16,9 @@ declare function postcssConfig({
   compress,
   sourceMap,
 }?: {
-  extract?: string;
-  compress?: boolean;
-  sourceMap?: boolean;
+  extract?: string | undefined;
+  compress?: boolean | undefined;
+  sourceMap?: boolean | undefined;
 }): {
   extensions: string[];
   extract: any;
@@ -45,8 +45,8 @@ declare function terserConfig({
   keep_classnames,
   keep_fnames,
 }?: {
-  keep_classnames?: boolean;
-  keep_fnames?: boolean | RegExp;
+  keep_classnames?: boolean | undefined;
+  keep_fnames?: boolean | RegExp | undefined;
 }): any;
 
 /**
